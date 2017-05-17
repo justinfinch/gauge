@@ -15,10 +15,9 @@ type gaugeCreate struct {
 }
 
 func (api *API) registerGaugeRoutes() {
-	api.echo.GET("user/:userId/gauges", getUserGauges(api.log))
-	api.echo.GET("/gauges", searchGauges(api.log, api.db))
-	api.echo.GET("/gauges/:id", getGauge(api.log))
-	api.echo.POST("/gauges", createGauge(api.log, api.db))
+	api.echo.GET("tenant/:tenantId/gauges", searchGauges(api.log, api.db))
+	api.echo.GET("tenant/:tenantId/gauges/:id", getGauge(api.log))
+	api.echo.POST("tenant/:tenantId/gauges", createGauge(api.log, api.db))
 }
 
 func searchGauges(log *logrus.Entry, db *gorm.DB) echo.HandlerFunc {
@@ -30,7 +29,8 @@ func searchGauges(log *logrus.Entry, db *gorm.DB) echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, nil)
 		}
 
-		gauges, err := gaugeRepo.GetAll()
+		tenatnID := c.Param("tenantId")
+		gauges, err := gaugeRepo.GetAll(tenatnID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, nil)
 		}
@@ -76,7 +76,8 @@ func createGauge(log *logrus.Entry, db *gorm.DB) echo.HandlerFunc {
 			"name": request.Name,
 		}).Debug("Creating gauge")
 
-		gauge, err := model.NewGauge(request.Name)
+		tenatnID := c.Param("tenantId")
+		gauge, err := model.NewGauge(request.Name, tenatnID)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, nil)
 		}

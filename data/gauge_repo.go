@@ -26,9 +26,9 @@ func (repo *GaugeRepo) Save(gauge *model.Gauge) error {
 }
 
 //GetAll gets all guages
-func (repo *GaugeRepo) GetAll() (*[]model.Gauge, error) {
+func (repo *GaugeRepo) GetAll(tenantID string) (*[]model.Gauge, error) {
 	var gauges []model.Gauge
-	repo.DB.Find(&gauges)
+	repo.DB.Where(&model.Gauge{TenantID: tenantID}).Find(&gauges)
 
 	return &gauges, nil
 }
