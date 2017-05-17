@@ -19,6 +19,9 @@ func NewRootCommand() *cobra.Command {
 	serveCmd := NewServeCommand()
 	rootCmd.AddCommand(serveCmd)
 
+	migrateCmd := NewMigrateCommand()
+	rootCmd.AddCommand(migrateCmd)
+
 	return &rootCmd
 }
 

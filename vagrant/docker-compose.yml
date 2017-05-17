@@ -1,0 +1,15 @@
+version: "3"
+services:
+  roach1:
+    image: cockroachdb/cockroach:v1.0
+    command: start --insecure
+    networks:
+      roach_net:
+        aliases:
+          - roach1
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+networks:
+  roach_net:
+    driver: bridge
