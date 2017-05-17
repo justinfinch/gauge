@@ -37,7 +37,7 @@ func NewAPI(log *logrus.Entry, config *conf.Config) (*API, error) {
 
 //Start starts the api server
 func (api *API) Start() {
-	const addr = "postgresql://maxroach@localhost:26257/bank?sslmode=disable"
+	const addr = "postgresql://gaugeapp@localhost:26257/gauge?sslmode=disable"
 	//db, err := gorm.Open("postgres", addr)
 	//if err != nil {
 	//	log.Fatal(err)

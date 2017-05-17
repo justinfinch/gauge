@@ -1,5 +1,5 @@
-hash: 0b02ed92d8a73c294e818fce977c6d51ce5520ab93582db22bb23ff32bdc3215
-updated: 2017-05-16T18:28:24.5099576-05:00
+hash: 96419ae8c2051e35bcfef4e52bfef4b233b48be20904d33e3de88e47c42367df
+updated: 2017-05-17T08:58:19.4845946-05:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: 4da3e2cfbabc9f751898f250b49f2439785783a1
@@ -20,6 +20,8 @@ imports:
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/jinzhu/gorm
   version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
+  subpackages:
+  - dialects/postgres
 - name: github.com/jinzhu/inflection
   version: 1c35d901db3da928c72a72d8458480cc9ade058f
 - name: github.com/labstack/echo
@@ -29,6 +31,11 @@ imports:
   subpackages:
   - color
   - log
+- name: github.com/lib/pq
+  version: 2704adc878c21e1329f46f6e56a1c387d788ff94
+  subpackages:
+  - hstore
+  - oid
 - name: github.com/magiconair/properties
   version: 51463bfca2576e06c62a8504b5c0f06d61312647
 - name: github.com/mattn/go-colorable
@@ -67,7 +74,7 @@ imports:
   - acme
   - acme/autocert
 - name: golang.org/x/sys
-  version: 1e99a4f9d247b28c670884b9a8d6801f39a47b77
+  version: 98b5b1e7e80eb60271c8dc4eba6521ec2c3e811e
   subpackages:
   - unix
 - name: golang.org/x/text
