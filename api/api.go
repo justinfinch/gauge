@@ -30,6 +30,13 @@ func NewAPI(log *logrus.Entry, config *conf.Config) (*API, error) {
 	e.Use(api.loggingMiddleware)
 	api.echo = e
 
+	const addr = "postgresql://gaugeapp@localhost:26257/gaugedb?sslmode=disable"
+	db, err := gorm.Open("postgres", addr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	api.db = db
+
 	api.registerGaugeRoutes()
 
 	return api, nil
@@ -37,13 +44,7 @@ func NewAPI(log *logrus.Entry, config *conf.Config) (*API, error) {
 
 //Start starts the api server
 func (api *API) Start() {
-	const addr = "postgresql://gaugeapp@localhost:26257/gauge?sslmode=disable"
-	//db, err := gorm.Open("postgres", addr)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//defer db.Close()
-
+	defer api.db.Close()
 	api.echo.Start(fmt.Sprintf(":%d", api.config.Port))
 	api.log.Info("Start method exited")
 }
