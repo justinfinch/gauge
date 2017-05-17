@@ -32,3 +32,10 @@ func (repo *GaugeRepo) GetAll(tenantID string) (*[]model.Gauge, error) {
 
 	return &gauges, nil
 }
+
+//Get gets a guage by ID
+func (repo *GaugeRepo) Get(tenantID string, id int64) (*model.Gauge, error) {
+	var gauge model.Gauge
+	repo.DB.Where(&model.Gauge{TenantID: tenantID}).First(&gauge, id)
+	return &gauge, nil
+}
