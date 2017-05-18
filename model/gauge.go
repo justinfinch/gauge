@@ -10,16 +10,16 @@ type Gauge struct {
 	gorm.Model
 	UUID     string `gorm:"not null"`
 	Name     string `gorm:"not null"`
-	TenantID string `gorm:"not null"`
+	OrgID 	 string `gorm:"not null"`
 }
 
 //NewGauge creates a new gauge struct given a name
-func NewGauge(name string, tenantID string) (*Gauge, error) {
+func NewGauge(name string, orgID string) (*Gauge, error) {
 	gaugeUUID, _ := uuid.NewRandom()
 	gauge := &Gauge{
 		UUID:     gaugeUUID.String(),
 		Name:     name,
-		TenantID: tenantID,
+		OrgID:    orgID,
 	}
 
 	return gauge, nil

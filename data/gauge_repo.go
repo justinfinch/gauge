@@ -26,16 +26,16 @@ func (repo *GaugeRepo) Save(gauge *model.Gauge) error {
 }
 
 //GetAll gets all guages
-func (repo *GaugeRepo) GetAll(tenantID string) (*[]model.Gauge, error) {
+func (repo *GaugeRepo) GetAll(orgID string) (*[]model.Gauge, error) {
 	var gauges []model.Gauge
-	repo.DB.Where(&model.Gauge{TenantID: tenantID}).Find(&gauges)
+	repo.DB.Where(&model.Gauge{OrgID: orgID}).Find(&gauges)
 
 	return &gauges, nil
 }
 
 //Get gets a guage by ID
-func (repo *GaugeRepo) Get(tenantID string, id int64) (*model.Gauge, error) {
+func (repo *GaugeRepo) Get(orgID string, id int64) (*model.Gauge, error) {
 	var gauge model.Gauge
-	repo.DB.Where(&model.Gauge{TenantID: tenantID}).First(&gauge, id)
+	repo.DB.Where(&model.Gauge{OrgID: orgID}).First(&gauge, id)
 	return &gauge, nil
 }

@@ -16,9 +16,9 @@ type gaugeCreate struct {
 }
 
 func (api *API) registerGaugeRoutes() {
-	api.echo.GET("tenant/:tenantId/gauges", searchGauges(api.log, api.db))
-	api.echo.GET("tenant/:tenantId/gauges/:id", getGauge(api.log, api.db))
-	api.echo.POST("tenant/:tenantId/gauges", createGauge(api.log, api.db))
+	api.echo.GET("org/:orgId/gauges", searchGauges(api.log, api.db))
+	api.echo.GET("org/:orgId/gauges/:id", getGauge(api.log, api.db))
+	api.echo.POST("org/:orgId/gauges", createGauge(api.log, api.db))
 }
 
 func searchGauges(log *logrus.Entry, db *gorm.DB) echo.HandlerFunc {
@@ -30,7 +30,7 @@ func searchGauges(log *logrus.Entry, db *gorm.DB) echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, nil)
 		}
 
-		tenatnID := c.Param("tenantId")
+		tenatnID := c.Param("orgId")
 		gauges, err := gaugeRepo.GetAll(tenatnID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, nil)
@@ -50,8 +50,8 @@ func getGauge(log *logrus.Entry, db *gorm.DB) echo.HandlerFunc {
 		}
 
 		id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-		tenantID := c.Param("tenantId")
-		gauge, err := gaugeRepo.Get(tenantID, id)
+		orgID := c.Param("orgId")
+		gauge, err := gaugeRepo.Get(orgID, id)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, nil)
 		}
@@ -73,7 +73,7 @@ func createGauge(log *logrus.Entry, db *gorm.DB) echo.HandlerFunc {
 			"name": request.Name,
 		}).Debug("Creating gauge")
 
-		tenatnID := c.Param("tenantId")
+		tenatnID := c.Param("orgId")
 		gauge, err := model.NewGauge(request.Name, tenatnID)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, nil)
