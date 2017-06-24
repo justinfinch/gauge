@@ -7,9 +7,9 @@ import (
 
 	//Import of postgres driver
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-
-	"github.com/justinfinch/gauge/model"
 	"github.com/spf13/cobra"
+
+	"github.com/justinfinch/gauge/gauges"
 )
 
 // NewDbCommand creates and sets up the db command
@@ -32,6 +32,5 @@ func migrateRun(cmd *cobra.Command, args []string) {
 	defer db.Close()
 
 	// Automatically create the "Gauges" table based on the Gauge model.
-	db.AutoMigrate(&model.Gauge{})
-
+	db.AutoMigrate(&gauges.Gauge{})
 }

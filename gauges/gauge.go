@@ -1,4 +1,4 @@
-package model
+package gauges
 
 import (
 	"github.com/google/uuid"
